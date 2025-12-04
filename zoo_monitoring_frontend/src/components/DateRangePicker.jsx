@@ -1,24 +1,46 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import dayjs from 'dayjs';
+import { useDateRange, getDateRangeFromPreset } from '../store/uiState';
 
 const presetsList = [
-  { key: '24h', label: 'Last 24h', from: () => dayjs().subtract(24, 'hour') },
-  { key: '7d', label: 'Last 7 days', from: () => dayjs().subtract(7, 'day') },
-  { key: '30d', label: 'Last 30 days', from: () => dayjs().subtract(30, 'day') },
+  { key: '24h', label: 'Last 24h' },
+  { key: '7d', label: 'Last 7 days' },
+  { key: '30d', label: 'Last 30 days' },
 ];
 
 // PUBLIC_INTERFACE
 export default function DateRangePicker() {
-  const [selected, setSelected] = useState('7d');
-  const [customFrom, setCustomFrom] = useState('');
-  const [customTo, setCustomTo] = useState('');
+  const [dateRange, setDateRange] = useDateRange();
+  const selected = dateRange?.preset || '7d';
+  const customFrom = selected === 'custom' ? dateRange?.from || '' : '';
+  const customTo = selected === 'custom' ? dateRange?.to || '' : '';
 
   const display = useMemo(() => {
-    const preset = presetsList.find((p) => p.key === selected);
-    const from = preset ? preset.from() : (customFrom ? dayjs(customFrom) : dayjs().subtract(7, 'day'));
-    const to = customTo ? dayjs(customTo) : dayjs();
-    return `${from.format('YYYY-MM-DD')} → ${to.format('YYYY-MM-DD')}`;
+    if (selected === 'custom') {
+      const from = customFrom ? dayjs(customFrom) : dayjs().subtract(7, 'day');
+      const to = customTo ? dayjs(customTo) : dayjs();
+      return `${from.format('YYYY-MM-DD')} → ${to.format('YYYY-MM-DD')}`;
+    }
+    // presets
+    const dr = getDateRangeFromPreset(selected);
+    return `${dr.from} → ${dr.to}`;
   }, [selected, customFrom, customTo]);
+
+  const onPresetChange = (value) => {
+    if (value === 'custom') {
+      setDateRange({ preset: 'custom', from: customFrom || '', to: customTo || '' });
+    } else {
+      setDateRange(getDateRangeFromPreset(value));
+    }
+  };
+
+  const onFromChange = (v) => {
+    setDateRange({ preset: 'custom', from: v, to: customTo || '' });
+  };
+
+  const onToChange = (v) => {
+    setDateRange({ preset: 'custom', from: customFrom || '', to: v });
+  };
 
   return (
     <div className="row" aria-label="Date range">
@@ -27,7 +49,7 @@ export default function DateRangePicker() {
         className="input"
         style={{ width: 140 }}
         value={selected}
-        onChange={(e) => setSelected(e.target.value)}
+        onChange={(e) => onPresetChange(e.target.value)}
       >
         {presetsList.map((p) => (
           <option key={p.key} value={p.key}>{p.label}</option>
@@ -36,8 +58,8 @@ export default function DateRangePicker() {
       </select>
       {selected === 'custom' && (
         <div className="row">
-          <input className="input" type="date" value={customFrom} onChange={(e) => setCustomFrom(e.target.value)} aria-label="From date" />
-          <input className="input" type="date" value={customTo} onChange={(e) => setCustomTo(e.target.value)} aria-label="To date" />
+          <input className="input" type="date" value={customFrom} onChange={(e) => onFromChange(e.target.value)} aria-label="From date" />
+          <input className="input" type="date" value={customTo} onChange={(e) => onToChange(e.target.value)} aria-label="To date" />
         </div>
       )}
       <span className="badge" title="Active range">{display}</span>

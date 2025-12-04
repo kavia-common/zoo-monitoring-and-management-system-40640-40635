@@ -1,8 +1,13 @@
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useBreadcrumbs, useLastView } from '../store/uiState';
 
 // PUBLIC_INTERFACE
 export default function Breadcrumbs() {
   const { pathname } = useLocation();
+  const [_, setBreadcrumbs] = useBreadcrumbs();
+  const [__, setLastView] = useLastView();
+
   const parts = pathname.split('/').filter(Boolean);
 
   const crumbs = [
@@ -12,6 +17,13 @@ export default function Breadcrumbs() {
       to: '/' + parts.slice(0, idx + 1).join('/'),
     })),
   ];
+
+  // Update global breadcrumbs and last view on path change
+  React.useEffect(() => {
+    setBreadcrumbs(crumbs);
+    setLastView(pathname || '/dashboard');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   return (
     <nav className="breadcrumbs" aria-label="Breadcrumb">

@@ -2,7 +2,11 @@ import Breadcrumbs from './Breadcrumbs';
 import DateRangePicker from './DateRangePicker';
 import UserMenu from './UserMenu';
 
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * TopBar shows brand, breadcrumbs, date range selector, and user menu.
+ * Breadcrumbs and DateRangePicker are wired to global UI state.
+ */
 export default function TopBar() {
   return (
     <>
