@@ -1,0 +1,4 @@
+{
+    "command": "npm install && npx tsc --noEmit && npm test -- --ci",
+    "working_directory": "/home/kavia/workspace/code-generation/zoo-monitoring-and-management-system-40640-40635/zoo_monitoring_frontend"
+}
