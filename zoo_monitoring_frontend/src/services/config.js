@@ -43,7 +43,7 @@ export const getEnv = () => {
     String(REACT_APP_API_BASE || "").toLowerCase() === "mock";
 
   const logLevel = (REACT_APP_LOG_LEVEL || "info").toLowerCase();
-  const healthcheckPath = REACT_APP_HEALTHCHECK_PATH || "/healthz";
+  const healthcheckPath = REACT_APP_HEALTHCHECK_PATH || "/health";
 
   return {
     apiBase,
