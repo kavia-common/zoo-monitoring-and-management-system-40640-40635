@@ -1,0 +1,82 @@
+:root {
+  /* inherits tokens from theme.css */
+}
+
+/* Container and page spacing */
+.container {
+  margin: 0 auto;
+  max-width: var(--container-max, 1200px);
+  padding: 0 16px;
+}
+
+/* Sections */
+.section {
+  margin-top: 24px;
+}
+
+/* Subtle dividers */
+.divider {
+  height: 1px;
+  width: 100%;
+  background: var(--color-border);
+  margin: 12px 0;
+}
+
+/* App shell responsive behavior */
+@media (max-width: 1024px) {
+  .app-shell {
+    grid-template-columns: 0 1fr;
+    grid-template-areas:
+      "topbar topbar"
+      "content content";
+  }
+  .sidenav { display: none; }
+}
+
+/* Topbar alignment helpers */
+.topbar .row {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Breadcrumb spacing inside topbar */
+.topbar .breadcrumbs {
+  margin-left: 8px;
+}
+
+/* Tooltip helper attr */
+[data-tooltip] {
+  position: relative;
+}
+
+/* Visually-hidden utility for a11y */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* Elevation utilities */
+.elev-0 { box-shadow: none !important; }
+.elev-1 { box-shadow: var(--shadow-sm) !important; }
+.elev-2 { box-shadow: var(--shadow-md) !important; }
+.elev-3 { box-shadow: var(--shadow-lg) !important; }
+
+/* Width helpers */
+.w-full { width: 100%; }
+.w-auto { width: auto; }
+
+/* Padding helpers */
+.p-8 { padding: 8px; }
+.p-12 { padding: 12px; }
+.p-16 { padding: 16px; }
+.p-24 { padding: 24px; }
+
+/* Margin helpers */
+.mb-8 { margin-bottom: 8px; }
+.mb-12 { margin-bottom: 12px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
