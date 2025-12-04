@@ -162,6 +162,12 @@ html, body, #root {
   font-size: 12px;
 }
 
+/* Helper for disabled buttons */
+button[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
