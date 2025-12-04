@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Loading, Empty, ErrorState } from '../../components/ui/States';
 import useOnlineStatus from '../../hooks/useOnlineStatus';
+import LinePlaceholder from '../../components/charts/LinePlaceholder';
+import DonutPlaceholder from '../../components/charts/DonutPlaceholder';
 
 // PUBLIC_INTERFACE
 export default function Dashboard() {
@@ -56,14 +58,18 @@ export default function Dashboard() {
       </div>
 
       <div className="grid-2 mt-24">
-        <div className="card" style={{ minHeight: 240 }}>
-          <h3 style={{ marginTop: 0 }}>Activity Timeline</h3>
-          <div style={{ color: '#6b7280' }}>[Chart placeholder]</div>
-        </div>
-        <div className="card" style={{ minHeight: 240 }}>
-          <h3 style={{ marginTop: 0 }}>Health Indicators</h3>
-          <div style={{ color: '#6b7280' }}>[Chart placeholder]</div>
-        </div>
+        <LinePlaceholder
+          title="Activity Timeline"
+          data={[5, 10, 8, 14, 12, 16, 9, 11, 18, 13]}
+          labels={['Activity']}
+          colors={['#1E3A8A']}
+        />
+        <DonutPlaceholder
+          title="Health Indicators"
+          data={[35, 25, 20, 20]}
+          labels={['Heart rate', 'Hydration', 'Sleep', 'Temp']}
+          colors={['#1E3A8A', '#F59E0B', '#059669', '#DC2626']}
+        />
       </div>
     </div>
   );

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Loading, Empty, ErrorState, toast } from '../../components/ui/States';
 import useOnlineStatus from '../../hooks/useOnlineStatus';
+import BarPlaceholder from '../../components/charts/BarPlaceholder';
+import LinePlaceholder from '../../components/charts/LinePlaceholder';
 
 // PUBLIC_INTERFACE
 export default function Reports() {
@@ -44,14 +46,28 @@ export default function Reports() {
     <div>
       <h2>Reports</h2>
       <div className="grid-2 mt-16">
-        {reports.map((r) => (
+        {reports.map((r, idx) => (
           <div key={r.id} className="card">
             <div className="row" style={{ justifyContent: 'space-between' }}>
               <strong>{r.title}</strong>
               <span className="badge">{r.date}</span>
             </div>
-            <div style={{ color: '#6b7280', marginTop: 8 }}>
-              Preview: [PDF/Image placeholder]
+            <div style={{ marginTop: 8 }}>
+              {idx % 2 === 0 ? (
+                <BarPlaceholder
+                  title="Events by Category"
+                  data={[12, 7, 5, 3]}
+                  labels={['Feeding', 'Movement', 'Health', 'Other']}
+                  colors={['#1E3A8A', '#F59E0B', '#059669', '#DC2626']}
+                />
+              ) : (
+                <LinePlaceholder
+                  title="Activity Over Time"
+                  data={[4, 6, 5, 9, 8, 10, 7]}
+                  labels={['Activity']}
+                  colors={['#1E3A8A']}
+                />
+              )}
             </div>
             <div className="row mt-16">
               <button className="btn" onClick={() => open(r)}>Open</button>
